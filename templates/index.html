@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>The Deep Divers</title>
+    <link rel="stylesheet" href="/statics/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+    <link rel="stylesheet" href="/statics/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="/statics/css/styles.min.css">
+    <link rel="stylesheet" href="/statics/img/mountain_bg.jpg">
+
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+    <style>
+    section {
+        min-height: 100px;
+        text-align: center;
+        background-color: white;
+        width: 100%;
+        padding: .375rem .75rem;
+        margin-top: 5%;
+      }
+
+    #loading{
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: #fff url("/statics/img/1474.gif") no-repeat center;
+        z-index: 99999;
+    }
+    </style>
+
+<script type="text/javascript">
+  $(document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url:'/predict',
+      data:{
+        link:$('#link').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+      },
+
+        beforeSend: function(){
+            $("#loader").show();
+            $('h3').html('')
+      },
+        complete: function(){
+          $("#loader").hide();
+        },
+      success: function(data){
+        $('h3').html(data)
+      }
+    });
+  });
+</script>
+</head>
+
+<body onload="loadingFunction()">
+    <div id="loading"></div>
+    <header class="header-dark">
+        <nav class="navbar navbar-dark navbar-expand-lg navigation-clean-search">
+            <div class="container"><a class="navbar-brand" href="">The Deep Divers</a>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container hero">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <h1 class="text-center">Deep Learning News Classifier&nbsp;</h1>
+                    <h2 class="display-4 text-center" style="color:white;">Classify News as Genuine or Fake&nbsp;</h1>
+
+                </div>
+            </div>
+            <div class="jumbotron container hero " style="background-color:grey;">
+                <form id="post-form">
+                    <div class="form-group">
+                        <div class="container hero">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2">
+                                    <h2 class="display-5 text-center">Enter news below&nbsp;</h2>
+
+                                </div>
+                      <input type="text" name="link" id="link" class="form-control" placeholder="Enter news here">
+                    </div>
+
+                    <button type="submit" id="shorten" style="margin-top: 1%;" class="btn btn-dark text-center">Predict</button>
+                  </form>
+                  <section id="section">
+                      <div id="loader" style="margin-top: 10x; display: none;">
+                          <img src="/statics/img/1474.gif">
+                      </div>
+                      <h3 id="text1"></h3>
+                </section>
+              </div>
+        </div>
+
+    </header>
+    <footer class="footer-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col item social"><a href="https://www.facebook.com/raghav.bansal.92505"><i class="icon ion-social-facebook"></i></a><a href="https://github.com/raghavbansal27"><i class="icon ion-social-github"></i></a><a href="https://www.linkedin.com/in/er-raghav-bansal/"><i class="icon ion-social-linkedin"></i></a><a href="https://www.instagram.com/raghavvbansal27/"><i class="icon ion-social-instagram"></i></a></div>
+            </div>
+            <p class="copyright">Made with ❤ by The Deep Divers team © 2021</p>
+        </div>
+    </footer>
+    <script src="/statics/js/jquery.min.js"></script>
+    <script src="/statics/bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+        var preloader = document.getElementById('loading');
+
+        function loadingFunction(){
+            preloader.style.display = 'none'
+        }
+    </script>
+</body>
+
+</html>
